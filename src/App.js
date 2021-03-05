@@ -3,26 +3,27 @@ import { BrowserRouter, Switch, Route } from "react-router-dom";
 import Navbar from './Components/Navbar'
 import DetailProduct from './DetailProduct'
 
+// REDUX
+import {createStore} from 'redux'
+import {Provider} from 'react-redux'
+import allReducer from './Redux/Reducers/index'
+
+const store = createStore(allReducer)
+
 class App extends React.Component{
-
-  state = {
-    totalCarts: 0
-  }
-
-  updateTotalCarts = (data) => {
-    this.setState({totalCarts: data})
-    console.log(data)
-  }
-
   render(){
     return (
       <>
-        <BrowserRouter>
-          <Navbar dataCart = {this.state.totalCarts} />
-          <Switch>
-            <Route path='/detail-product' render={() => <DetailProduct bebas={this.updateTotalCarts} />} />
-          </Switch>
-        </BrowserRouter>
+        <Provider store={store}>
+
+          <BrowserRouter>
+            <Navbar />
+            <Switch>
+              <Route path='/detail-product' component={DetailProduct}/>
+            </Switch>
+          </BrowserRouter>
+          
+        </Provider>
       </>
     );
   }

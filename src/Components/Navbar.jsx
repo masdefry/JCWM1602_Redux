@@ -1,22 +1,23 @@
 import axios from 'axios'
 import React from 'react'
+import { connect } from 'react-redux'
 
-export default class Navbar extends React.Component{
+class Navbar extends React.Component{
 
-    state = {
-        totalCarts: 0
-    }
+    // state = {
+    //     totalCarts: 0
+    // }
 
-    componentDidMount(){
-        // axios.get('http://localhost:2000/carts?userId=3')
-        // .then((res) => {
-        //     console.log(res.data.length)
-        //     this.setState({totalCarts: res.data.length})
-        // })
-        // .catch((err) => {
-        //     console.log(err)
-        // })
-    }
+    // componentDidMount(){
+    //     axios.get('http://localhost:2000/carts?userId=3')
+    //     .then((res) => {
+    //         console.log(res.data.length)
+    //         this.setState({totalCarts: res.data.length})
+    //     })
+    //     .catch((err) => {
+    //         console.log(err)
+    //     })
+    // }
 
     render(){
         return(
@@ -30,7 +31,16 @@ export default class Navbar extends React.Component{
                                 :
                                     0
                             } */}
-                            Keranjang Belanja Anda : {this.props.dataCart}
+                            {/* Keranjang Belanja Anda : {
+                                this.props.dataCart? //Apakah props dataCart itu ada / nggak sama dengan nol
+                                    this.props.dataCart
+                                :
+                                    this.state.totalCarts
+                            } */}
+
+                            Keranjang Belanja Anda :  {
+                                this.props.totalCarts.totalCarts
+                            }
                         </div>
                     </div>
                 </div>
@@ -38,3 +48,11 @@ export default class Navbar extends React.Component{
         )
     }
 }
+
+const mapStateToProps = (state) => {
+    return{
+      totalCarts: state.totalCarts
+    }
+}
+
+export default connect(mapStateToProps, '')(Navbar)

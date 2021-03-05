@@ -1,6 +1,10 @@
 import axios from "axios"
 import React from "react"
 
+// REDUX
+import { connect } from "react-redux"
+import { updateDataCarts } from './Redux/Actions/CartsAction'
+
 class DetailProduct extends React.Component {
 
     updateCart = () => {
@@ -14,7 +18,7 @@ class DetailProduct extends React.Component {
         .then((res) => {
             axios.get('http://localhost:2000/carts?userId=3')
             .then((res) => {
-                this.props.bebas(res.data.length)
+                this.props.updateDataCarts(res.data.length)
             })
             .catch((err) => {
                 console.log(err)
@@ -30,6 +34,15 @@ class DetailProduct extends React.Component {
             <div className= "container">
                 <div className="row">
                     <div className="col-12 col-md-6">
+                        <div>
+                            Keranjang Belanja Anda : 
+                            {
+                                this.props.totalCarts.totalCarts?
+                                    this.props.totalCarts.totalCarts
+                                :
+                                    null
+                            } 
+                        </div>
                         <div>
                             <img src="https://d2xjmi1k71iy2m.cloudfront.net/dairyfarm/id/images/728/0172811_PE327002_S4.jpg" className="img-fluid" alt=""/>
                         </div>
@@ -80,7 +93,14 @@ class DetailProduct extends React.Component {
             </div>
         )
     }
-
 }
 
-export default DetailProduct
+const mapStateToProps = (state) => {
+    return{
+      totalCarts: state.totalCarts
+    }
+}
+
+const mapDispatchToProps = { updateDataCarts }
+
+export default connect(mapStateToProps, mapDispatchToProps)(DetailProduct)
