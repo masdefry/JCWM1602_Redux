@@ -12,8 +12,13 @@ class DetailProduct extends React.Component {
 
         axios.post('http://localhost:2000/carts', dataToSend)
         .then((res) => {
-            console.log(res)
-            window.location = '/detail-product'
+            axios.get('http://localhost:2000/carts?userId=3')
+            .then((res) => {
+                this.props.bebas(res.data.length)
+            })
+            .catch((err) => {
+                console.log(err)
+            })
         })
         .catch((err) => {
             console.log(err)
